@@ -3,9 +3,7 @@
 		<header class="header">
 			<h1>todos</h1>
             <todo-input
-                :todo="todo"
-                @input="onInput"
-
+                @add-todo="addTodo"
             />
 		</header>
 		<section class="main">
@@ -42,8 +40,12 @@ export default {
 		}
 	},
     methods: {
-        onInput(value) {
-            this.todo.title = value;
+        addTodo(todoTitle) {
+            const newTodo = todoTitle && todoTitle.trim();
+            if(!newTodo){
+                return
+            }
+            this.todo.title = newTodo;
         }
     },
 }

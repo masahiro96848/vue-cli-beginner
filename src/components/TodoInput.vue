@@ -2,10 +2,10 @@
     <input 
         type="text"
         class="new-todo"
+        v-model="newTodo"
+        @keydown.enter="addTodo"
         autofocus autocomplete="off"
         placeholder="What needs to be done"
-        :value="todo.title"
-        @input="onInput"
     >
 </template>
 
@@ -15,9 +15,15 @@ export default {
     props: {
         todo: Object,
     },
+    data() {
+        return {
+            newTodo: '',
+        }
+    },
     methods: {
-        onInput(event) {
-            this.$emit('input', event.target.value);
+        addTodo(){
+            this.$emit('add-todo', this.newTodo)
+            this.newTodo = '';
         }
     },
 }
