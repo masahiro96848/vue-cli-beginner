@@ -2,14 +2,11 @@
 	<section id="app" class="todoapp">
 		<header class="header">
 			<h1>todos</h1>
-            <input 
-                class="new-todo"
-                autofocus autocomplete="off"
-                type="text" 
-                placeholder="What needs to be done"
-                v-model="todo.title"
+            <todo-input
+                :todo="todo"
+                @input="onInput"
 
-            >
+            />
 		</header>
 		<section class="main">
 			<ul class="todo-list">
@@ -28,19 +25,27 @@
 </template>
 
 <script>
+import TodoInput from './components/TodoInput.vue'
 export default {
 	name: 'app',
 	components: {
+        TodoInput,
 	},
 	data() {
-		return {
+		
+    return {
 			todo: {
 				id: 0,
 				title: 'test todo',
 				completed: false
 			}
 		}
-	}
+	},
+    methods: {
+        onInput(value) {
+            this.todo.title = value;
+        }
+    },
 }
 </script>
 
