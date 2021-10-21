@@ -2,50 +2,55 @@
 	<section id="app" class="todoapp">
 		<header class="header">
 			<h1>todos</h1>
-            <todo-input
+            <TodoInput
                 @add-todo="addTodo"
             />
 		</header>
-		<section class="main">
-			<ul class="todo-list">
-				<li class="todo">
-					<div class="view">
-                        <input 
-                            type="checkbox"
-                            class="toggle"
-                        >
-						<label>{{todo.title}}</label>
-					</div>
-				</li>
-			</ul>
-		</section>
+		
+        <TodoList 
+            :todos="todos"
+            :filtered-todos="filteredTodos"
+        />
 	</section>
 </template>
 
 <script>
 import TodoInput from './components/TodoInput.vue'
+import TodoList from './components/TodoList.vue'
 export default {
 	name: 'app',
 	components: {
-        TodoInput,
+        TodoInput, TodoList,
 	},
 	data() {
 		
     return {
-			todo: {
-				id: 0,
-				title: 'test todo',
-				completed: false
-			}
+			todos: [
+				{
+					id: 0,
+					title: '項目0',
+					completed: false
+				},
+				{
+					id: 1,
+					title: '項目1',
+					completed: false
+				}
+			]
 		}
 	},
+    computed: {
+        filteredTodos(){
+            return this.todos
+        }
+    },
     methods: {
         addTodo(todoTitle) {
             const newTodo = todoTitle && todoTitle.trim();
             if(!newTodo){
                 return
             }
-            this.todo.title = newTodo;
+            this.todos[0].title = newTodo;
         }
     },
 }
