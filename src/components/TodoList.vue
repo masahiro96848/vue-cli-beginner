@@ -8,6 +8,7 @@
             >
             <TodoItem
                 :todo="todo"
+                @remove-todo="removeTodo"
             />
 
             </li>
@@ -26,7 +27,12 @@ export default {
     props: {
         todos: Array,
         filteredTodos: Array,
-    }
+    },
+    methods: {
+        removeTodo(todo) {
+            this.$emit('remove-todo', todo);
+        }
+    },
 
 }
 </script>
