@@ -25,18 +25,8 @@ export default {
 	data() {
 		
     return {
-			todos: [
-				{
-					id: 0,
-					title: '項目0',
-					completed: false
-				},
-				{
-					id: 1,
-					title: '項目1',
-					completed: false
-				}
-			]
+			todos: [],
+            uid: 0
 		}
 	},
     computed: {
@@ -50,7 +40,11 @@ export default {
             if(!newTodo){
                 return
             }
-            this.todos[0].title = newTodo;
+            this.todos.push({
+                id: this.uid++,
+                title: newTodo,
+                completed: false,
+            })
         }
     },
 }
