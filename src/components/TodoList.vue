@@ -21,6 +21,7 @@
             />
             <TodoEdit 
                 :todo="todo"
+                @done-edit="doneEdit"
             />
 
             </li>
@@ -59,6 +60,18 @@ export default {
         },
         editTodo(todo){
             this.editedTodo = todo;
+        },
+        doneEdit(todoTitle){
+            if(!this.editedTodo) {
+                return;
+            }
+            const title = todoTitle.trim();
+            if(title) {
+                this.editedTodo.title = title;
+            } else {
+                this.removeTodo(this.editedTodo);
+            }
+            this.editedTodo = null;
         }
     },
 
