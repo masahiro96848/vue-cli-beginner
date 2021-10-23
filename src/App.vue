@@ -13,28 +13,76 @@
             @remove-todo="removeTodo"
             @done="done"
         />
+        <TodoController
+            :todos="todos"
+            :remaining="remaining"
+            :visibility="visibility"
+        />
 	</section>
 </template>
 
 <script>
 import TodoInput from './components/TodoInput.vue'
 import TodoList from './components/TodoList.vue'
+import TodoController from './components/TodoController.vue'
+
+const STORAGE_KEY = 'todo-vuejs-2.6';
+const todoStorage = {
+	fetch() {
+		const todos = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+		todos.forEach(function(todo, index) {
+			todo.id = index;
+		});
+		todoStorage.uid = todos.length;
+		return todos;
+	},
+	save(todos) {
+		localStorage.setItem(STORAGE_KEY, JSON.stringify(todos));
+	}
+};
+const filters = {
+    all(todos) {
+        return todos
+    },
+    active(todos) {
+        return todos.filter((todo) => !todo.completed);
+    },
+    completed(todos){
+        return todos.filter((todo) => todo.completed)
+    }
+};
 export default {
 	name: 'app',
 	components: {
-        TodoInput, TodoList,
+        TodoInput, TodoList,TodoController,
 	},
 	data() {
 		
     return {
-			todos: [],
-            uid: 0
+			todos: todoStorage.fetch(),
+            uid: 0, 
+            visibility: 'all',
 		}
 	},
     computed: {
         filteredTodos(){
-            return this.todos
+            return filters[this.visibility](this.todos);
+        },
+        remaining() {
+            const todos = filters.active(this.todos);
+            return todos.length
+        },
+    },
+    watch: {
+        todos: {
+            handler(todos) {
+                todoStorage.save(todos)
+            },
+            deep: true
         }
+    },
+    mounted() {
+        window.addEventListener('hashchange', this.onHashChange)
     },
     methods: {
         addTodo(todoTitle) {
@@ -53,6 +101,11 @@ export default {
         },
         done(todo, completed) {
             todo.completed = completed
+        },
+        onHashChange() {
+            const visibility = window.location.hash.replace(/#\/?/, '');
+            this.visibility = visibility
+            console.log(visibility); // 確認用
         }
     },
 }
