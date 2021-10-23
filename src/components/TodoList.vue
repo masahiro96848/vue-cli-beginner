@@ -10,13 +10,20 @@
         <ul class="todo-list">
             <li v-for="todo in filteredTodos"
                 class="todo"
-                :class="{completed: todo.completed}"
+                :class="{completed: todo.completed, editing: todo === editedTodo}"
                 :key="todo.id"
             >
             <TodoItem
                 :todo="todo"
                 @remove-todo="removeTodo"
                 @done="done"
+                @edit-todo="editTodo"
+            />
+            <TodoEdit 
+                :todo="todo"
+                :editedTodo="editedTodo"
+                @done-edit="doneEdit"
+                @cancel-edit="cancelEdit"
             />
 
             </li>
@@ -26,11 +33,17 @@
 
 <script>
 import TodoItem from './TodoItem.vue'
+import TodoEdit from './TodoEdit.vue'
 
 export default {
     name: 'TodoList',
     components: {
-        TodoItem
+        TodoItem, TodoEdit
+    },
+    data() {
+        return {
+            editedTodo: null
+        };
     },
     props: {
         todos: Array,
@@ -46,6 +59,24 @@ export default {
         },
         onInput(){
             this.$emit('allDone', !this.allDone)
+        },
+        editTodo(todo){
+            this.editedTodo = todo;
+        },
+        doneEdit(todoTitle){
+            if(!this.editedTodo) {
+                return;
+            }
+            const title = todoTitle.trim();
+            if(title) {
+                this.editedTodo.title = title;
+            } else {
+                this.removeTodo(this.editedTodo);
+            }
+            this.editedTodo = null;
+        },
+        cancelEdit() {
+            this.editedTodo = null;
         }
     },
 
