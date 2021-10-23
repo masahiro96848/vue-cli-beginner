@@ -12,6 +12,8 @@
             :filtered-todos="filteredTodos"
             @remove-todo="removeTodo"
             @done="done"
+            :allDone="allDone"
+            @allDone="onAllDone"
         />
         <TodoController
             :todos="todos"
@@ -72,6 +74,14 @@ export default {
             const todos = filters.active(this.todos);
             return todos.length
         },
+        allDone: {
+            get(){
+                return this.remaining === 0;
+            },
+            set(value) {
+                this.todos.forEach((todo) => todo.completed = value)
+            }
+        }
     },
     watch: {
         todos: {
@@ -101,6 +111,9 @@ export default {
         },
         done(todo, completed) {
             todo.completed = completed
+        },
+        onAllDone(done) {
+            this.allDone = done
         },
         onHashChange() {
             const visibility = window.location.hash.replace(/#\/?/, '');

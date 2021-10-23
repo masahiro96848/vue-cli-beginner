@@ -4,6 +4,7 @@
             type="checkbox" 
             class="toggle"
             :value="todo.completed"
+            :checked="todo.completed"
             @input="onInput"
         >
         <label for="">{{ todo.title }}</label>
