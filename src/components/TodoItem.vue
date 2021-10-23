@@ -1,6 +1,11 @@
 <template>
     <div class="view">
-        <input type="checkbox" class="toggle">
+        <input 
+            type="checkbox" 
+            class="toggle"
+            :value="todo.completed"
+            @input="onInput"
+        >
         <label for="">{{ todo.title }}</label>
         <button class="destroy" @click="removeTodo">
 
@@ -17,6 +22,9 @@ export default {
     methods: {
         removeTodo() {
             this.$emit('remove-todo', this.todo)
+        },
+        onInput() {
+            this.$emit('done', this.todo, !this.todo.completed)
         }
     }
 }
