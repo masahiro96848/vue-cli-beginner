@@ -21,6 +21,7 @@
             />
             <TodoEdit 
                 :todo="todo"
+                :editedTodo="editedTodo"
                 @done-edit="doneEdit"
                 @cancel-edit="cancelEdit"
             />
