@@ -7,7 +7,9 @@
             :checked="todo.completed"
             @input="onInput"
         >
-        <label for="">{{ todo.title }}</label>
+        <label @dblclick="editTodo">
+            {{ todo.title }}
+        </label>
         <button class="destroy" @click="removeTodo">
 
         </button>
@@ -26,6 +28,9 @@ export default {
         },
         onInput() {
             this.$emit('done', this.todo, !this.todo.completed)
+        },
+        editTodo() {
+            this.$emit('edit-todo', this.todo)
         }
     }
 }
