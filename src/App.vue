@@ -19,6 +19,7 @@
             :todos="todos"
             :remaining="remaining"
             :visibility="visibility"
+            @removeCompleted="removeCompleted"
         />
 	</section>
 </template>
@@ -119,6 +120,9 @@ export default {
             const visibility = window.location.hash.replace(/#\/?/, '');
             this.visibility = visibility
             console.log(visibility); // 確認用
+        },
+        removeCompleted() {
+            this.todos = filters.active(this.todos);
         }
     },
 }

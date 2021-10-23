@@ -8,6 +8,13 @@
             <li><a href="#/active" :class="{selected: visibility === 'active'}">未処理</a></li>
             <li><a href="#/completed" :class="{selected: visibility === 'completed'}">完了</a></li>
         </ul>
+        <button 
+            class="clear-completed"
+            v-show="todos.length > remaining"
+            @click="removeCompleted"
+        >
+        選択したTodoを削除する
+        </button>
     </footer>
 </template>
 
@@ -23,6 +30,11 @@ export default {
 		todos: Array,
 		remaining: Number,
 		visibility: String
-	}
+	},
+    methods: {
+        removeCompleted() {
+            this.$emit('removeCompleted');
+        }
+    }
 }
 </script>
