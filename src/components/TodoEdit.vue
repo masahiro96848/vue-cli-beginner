@@ -6,6 +6,7 @@
         :value="todo.title"
         @input="onInput"
         @keypress.enter="doneEdit"
+        @keyup.esc="cancelEdit"
 
     >
 </template>
@@ -31,6 +32,10 @@ export default {
         doneEdit(event) {
             this.editedTitle = event.target.value;
             this.$emit('done-edit', this.editedTitle)
+        },
+        cancelEdit(event) {
+            event.target.value = this.todo.title;
+            this.$emit('cancel-edit')
         }
     },
 }

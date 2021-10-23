@@ -22,6 +22,7 @@
             <TodoEdit 
                 :todo="todo"
                 @done-edit="doneEdit"
+                @cancel-edit="cancelEdit"
             />
 
             </li>
@@ -71,6 +72,9 @@ export default {
             } else {
                 this.removeTodo(this.editedTodo);
             }
+            this.editedTodo = null;
+        },
+        cancelEdit() {
             this.editedTodo = null;
         }
     },
