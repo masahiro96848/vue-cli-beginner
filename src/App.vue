@@ -10,6 +10,8 @@
         <TodoList 
             :todos="todos"
             :filtered-todos="filteredTodos"
+            @remove-todo="removeTodo"
+            @done="done"
         />
 	</section>
 </template>
@@ -45,6 +47,12 @@ export default {
                 title: newTodo,
                 completed: false,
             })
+        },
+        removeTodo(todo) {
+            this.todos = this.todos.filter((item) => item !== todo);
+        },
+        done(todo, completed) {
+            todo.completed = completed
         }
     },
 }
