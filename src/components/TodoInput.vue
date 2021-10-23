@@ -3,7 +3,7 @@
         type="text"
         class="new-todo"
         v-model="newTodo"
-        @keypress="addTodo"
+        @keypress.enter="addTodo"
         autofocus autocomplete="off"
         placeholder="What needs to be done"
     >
