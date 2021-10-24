@@ -1,3 +1,6 @@
+firebase Hostingを使ってデプロイ
+https://vue-cli-beginner.web.app/
+
 # vue-cli-beginner
 
 ## Project setup
